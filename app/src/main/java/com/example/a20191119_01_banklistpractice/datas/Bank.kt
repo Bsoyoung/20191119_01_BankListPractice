@@ -14,6 +14,11 @@ class Bank {
 
             val bank = Bank()
 
+            bank.id = json.getInt("id")
+            bank.code = json.getString("code")
+            bank.name= json.getString("name")
+            bank.logo = json.getString("logo")
+
 
 
             return bank

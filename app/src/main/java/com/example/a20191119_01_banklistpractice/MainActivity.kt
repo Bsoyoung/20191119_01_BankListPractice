@@ -39,8 +39,8 @@ class MainActivity : BaseActivity() {
                     for(i in 0 .. banks.length()){
                         val bankJsonObject = banks.getJSONObject(i)
 
-                        bankJS
-
+                        val bankData = Bank.getBankFromJsonObject(bankJsonObject)
+                        bankList.add(bankData)
                     }
 
                 }else{
