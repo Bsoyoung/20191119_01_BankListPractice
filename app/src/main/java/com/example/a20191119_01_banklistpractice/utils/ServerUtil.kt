@@ -12,41 +12,42 @@ class ServerUtil {
         fun onResponse(json: JSONObject)
     }
 
-    companion object{
+    companion object {
+
         var BASE_URL = "http://192.168.0.26:5000"
 
-
-        fun getRequestBankList(context:Context,handler: JsonResponseHandler){
+        fun getRequestBankList(context:Context, handler: JsonResponseHandler) {
 
             var client = OkHttpClient()
 
             var urlBuilder = HttpUrl.parse("${BASE_URL}/info/bank")!!.newBuilder()
-
-            //파라미터 첨부가 필요 없다.
+//            파라미터 첨부가 필요 없다.
 //            urlBuilder.addEncodedQueryParameter()
 
             val requestUrl = urlBuilder.build().toString()
 
-            //Intent와 비슷한 개념. 어디로 갈지 세팅 완료.
+//            Intent 와 비슷한 개념. 어디로 갈지 세팅 완료.
+//            실제 출발은 아직 안함
             val request = Request.Builder()
-                .url(requestUrl).build()
+                .url(requestUrl)
+                .build()
 
-            client.newCall(request).enqueue(object :Callback{
+            client.newCall(request).enqueue(object : Callback {
                 override fun onFailure(call: Call, e: IOException) {
-                    Log.e("서버통신실패",e.localizedMessage)
+                    Log.e("서버통신실패", e.localizedMessage)
                 }
 
                 override fun onResponse(call: Call, response: Response) {
-                    val body = response.body()!!.toString()
+
+                    val body = response.body()!!.string()
                     val json = JSONObject(body)
                     handler?.onResponse(json)
+
                 }
 
             })
 
-
         }
-
     }
 
 }
